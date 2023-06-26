@@ -1,6 +1,4 @@
 #include "sort.h"
-#include <stdio.h>
-
 
 /**
  * bubble_sort - sort an integer array using Bubble Sort
@@ -19,7 +17,7 @@ void bubble_sort(int *array, size_t size)
 		{
 			if (array[j] > array[j + 1])
 			{
-				swap_array(array, j, j + 1);
+				swap_array(array + j, array + j + 1);
 				swapped = 1;
 				print_array(array,  size);
 			}
@@ -30,16 +28,15 @@ void bubble_sort(int *array, size_t size)
 }
 
 /**
- * swap_array - swap two elements in an integer array
- * @array: array to swap items in
- * @i: first index
- * @j: second index
- * */
-void swap_array(int *array, size_t i, size_t j)
+ * swap_array - swap two elements values in memory
+ * @i: first integer
+ * @j: second integer
+ */
+void swap_array(int *i, int *j)
 {
 	int tmp;
 	
-	tmp = array[j];
-	array[j] = array[i];
-	array[i] = tmp;
+	tmp = *j;
+	*j = *i;
+	*i = tmp;
 }
