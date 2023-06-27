@@ -15,6 +15,7 @@ void swap_adjacent_nodes(listint_t **list, listint_t *i, listint_t *j)
 			i->prev->next = j;
 		else
 			*list = j;
+
 		if (j->next)
 			j->next->prev = i;
 
@@ -92,34 +93,50 @@ void swap_list_nodes(listint_t **list, listint_t *i, listint_t *j)
 	else
 		swap_separate_nodes(list, i, j);
 }
-
 /**
- * insertion_sort_list - sort an linked list using Insertion Sort
- * @list: linked list to sort
+ * cocktail_sort_list - sort an linked list using Cocktail Shaker Sort
+ * @list: doubly linked list to sort
  */
-void insertion_sort_list(listint_t **list)
+void cocktail_sort_list(listint_t **list)
 {
-	listint_t *curr, *prev, *p, *next;
+	listint_t *start, *end, *curr, *next;
+	int swapped;
 
-	if (list == NULL || *list == NULL || (*list)->next == NULL)
+	if (list == NULL || *list == NULL)
 		return;
-
-	curr = (*list)->next;
-	next = curr->next;
-
-	while (curr != NULL)
+	start = *list;
+	end = NULL;
+	swapped = 1;
+	while (swapped)
 	{
-		p = curr;
-		prev = p->prev;
-
-		while (prev != NULL && prev->n > p->n)
+		swapped = 0;
+		curr = start;
+		next = curr->next;
+		while (next != end)
 		{
-			swap_list_nodes(list, prev, p);
-			print_list(*list);
-			prev = p->prev;
+			if (curr->n > curr->next->n)
+			{
+				swap_list_nodes(list, curr, curr->next);
+				print_list(*list);
+				swapped = 1;
+			}
+			curr = next;
+			next = curr ? curr->next : curr->next;
 		}
-
-		curr = next;
-		next = curr ? curr->next : NULL;
+		end = curr;
+		swapped = 0;
+		next = curr->prev;
+		while (next != start->prev)
+		{
+			if (curr->n < curr->prev->n)
+			{
+				swap_list_nodes(list, curr, curr->prev);
+				print_list(*list);
+				swapped = 1;
+			}
+			curr = next;
+			next = curr ? curr->prev : curr->prev;
+		}
+		start = curr;
 	}
 }

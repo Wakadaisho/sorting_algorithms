@@ -1,9 +1,9 @@
 #include "sort.h"
 
 /**
- * partition - partition array using Lomuto scheme on last element
+ * partition - partition array using Hoare scheme on last element
  * @array: array to partition
- * @size: size of the whole array
+ * @size: size of the array
  * @low: lowest index in parition
  * @high: largest index in partiton
  * Return: index of the pivot once moved to correct position
@@ -12,20 +12,26 @@ int partition(int *array, size_t size, int low, int high)
 {
 	int pivot, i, j;
 
+	pivot = array[low];
 	i = low - 1;
-	pivot = array[high];
+	j = high + 1;
 
-	for (j = low; j <= high - 1; j++)
+	while (1)
 	{
-		if (array[j] <= pivot)
-		{
+		do {
 			i++;
-			swap_array(array + i, array + j);
-		}
+		} while (array[i] < pivot);
+
+		do {
+			j--;
+		} while (array[j] > pivot);
+
+		if (i >= j)
+			return (j);
+
+		swap_array(array + i, array + j);
+		print_array(array, size);
 	}
-	swap_array(array + i + 1, array + high);
-	print_array(array, size);
-	return (i + 1);
 }
 
 /**
@@ -42,17 +48,17 @@ void quick_sort_r(int *array, size_t size, int low, int high)
 	if (low < high || size < 2 || array == NULL)
 	{
 		pivot = partition(array, size, low, high);
-		quick_sort_r(array, size, low, pivot - 1);
+		quick_sort_r(array, size, low, pivot);
 		quick_sort_r(array, size, pivot + 1, high);
 	}
 }
 
 /**
- * quick_sort - sort an integer array using Quick Sort (Lomuto)
+ * quick_sort_hoare - sort an integer array using Quick Sort (Hoare)
  * @array: array to sort
  * @size: size of the array
  */
-void quick_sort(int *array, size_t size)
+void quick_sort_hoare(int *array, size_t size)
 {
 	quick_sort_r(array, size, 0, (int)size - 1);
 }

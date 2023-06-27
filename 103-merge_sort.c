@@ -37,7 +37,7 @@ void merge_arrays(int *array, int *left, size_t l_size,
 }
 
 /**
- * merge_sort - sort an linked list using Merge Sort
+ * merge_sort - sort an array using Merge Sort
  * @array: array to sort
  * @size: size of the array
  */

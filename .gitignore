@@ -1,4 +1,5 @@
 *-main*
+vgcore*
 print_array.c
 print_list.c
 bubble
@@ -9,3 +10,6 @@ counting
 merge
 radix
 bitonic
+cocktail
+shell
+deck
