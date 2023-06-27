@@ -36,13 +36,15 @@ size_t partition(int *array, size_t low, size_t high)
  */
 void quick_sort(int *array, size_t size)
 {
-	int *stack, top;
+	int *stack, top = -1;
 	int low, high, pivotIndex;
+
+	if (size < 2 ||  array == NULL)
+		return;
 
 	stack = malloc(size * sizeof(int));
 	if (stack == NULL)
 		return;
-	top = -1;
 
 	stack[++top] = 0;
 	stack[++top] = size - 1;
@@ -51,6 +53,8 @@ void quick_sort(int *array, size_t size)
 	{
 		high = stack[top--];
 		low = stack[top--];
+		if (low >= high || low < 0)
+			return;
 		pivotIndex = partition(array, low, high);
 		if (pivotIndex - 1 > low)
 		{
